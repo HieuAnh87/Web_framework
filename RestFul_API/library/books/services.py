@@ -8,6 +8,7 @@ book_schema = BookSchema()
 books_schema = BookSchema(many=True)
 
 
+# Add book
 def add_book_service():
     data = request.json
     if data and ('name' in data) and ('page_count' in data) and ('author_id' in data) and ('category_id' in data):
@@ -19,11 +20,12 @@ def add_book_service():
             new_book = Books(name, page_count, author_id, category_id)
             db.session.add(new_book)
             db.session.commit()
-            return "Add success"
+            return jsonify({"message": "Add success!"}), 200
         except IndentationError:
             db.session.rollback()
-            return "Can not add book!"
-
+            return jsonify({"message": "Can not add book!"}), 400
+    else:
+        return jsonify({"message": "Request error"}), 400
 
 # Get book by ID
 def get_book_by_id_service(id):
@@ -31,7 +33,7 @@ def get_book_by_id_service(id):
     if book:
         return book_schema.jsonify(book)
     else:
-        return "Not found book!"
+        return jsonify({"message": "Not found book!"}), 404
 
 
 # Get all books
@@ -40,7 +42,7 @@ def get_all_books_service():
     if books:
         return books_schema.jsonify(books)
     else:
-        return "Not found book!"
+        return jsonify({"message": "Not found books!"}), 404
 
 
 # Update book by id
@@ -55,12 +57,12 @@ def update_book_by_id_service(id):
                 book.author_id = data["author_id"]
                 book.category_id = data["category_id"]
                 db.session.commit()
-                return "Updated Success!"
+                return jsonify({"message": "Book updated!"}), 200
             except IndentationError:
                 db.session.rollback()
-                return "Can not update book!"
+                return jsonify({"message": "Can not update book!"}), 400
     else:
-        return "Not found book!"
+        return jsonify({"message": "Not found books!"}), 404
 
 
 # Delete book by id
@@ -70,10 +72,10 @@ def delete_book_by_id_service(id):
         try:
             db.session.delete(book)
             db.session.commit()
-            return "Book deleted!"
+            return jsonify({"message": "Book deleted!"}), 200
         except IndentationError:
             db.session.rollback()
-            return "Can not delete book!"
+            return jsonify({"message": "Can not delete book!"}), 400
 
     else:
-        return "Not found book!"
+        return jsonify({"message": "Not found books!"}), 404

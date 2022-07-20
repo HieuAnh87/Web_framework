@@ -1,6 +1,6 @@
 from flask import Blueprint
 from .services import add_book_service, get_book_by_id_service, get_all_books_service, update_book_by_id_service, \
-    delete_book_by_id_service
+    delete_book_by_id_service, get_book_by_author_service
 
 books = Blueprint("books", __name__)
 
@@ -32,3 +32,9 @@ def update_book_by_id(id):
 @books.route("/book-management/book/<int:id>", methods=['DELETE'])
 def delete_book_by_id(id):
     return delete_book_by_id_service(id)
+
+
+# Get book by author's name
+@books.route("/book-management/book/<string:author>", methods=["GET"])
+def get_book_by_author(author):
+    return get_book_by_author_service(author)

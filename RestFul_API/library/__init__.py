@@ -1,6 +1,6 @@
 from flask import Flask, request, Blueprint
 from .books.controller import books
-# from .borrow.controller import borrow
+from .borrow.controller import borrow
 from .extension import db, ma
 from .models import Students, Books, Author, Category, Borrows
 import os
@@ -19,5 +19,5 @@ def create_app(config_file="config.py"):
     app.config.from_pyfile(config_file)
     create_db(app)
     app.register_blueprint(books)
-    # app.register_blueprint(borrow)
+    app.register_blueprint(borrow)
     return app

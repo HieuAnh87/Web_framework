@@ -1,6 +1,8 @@
+from sqlalchemy import func
+
 from RestFul_API.library.extension import db
 from RestFul_API.library.libraryma import ma, BookSchema
-from RestFul_API.library.models import Books
+from RestFul_API.library.models import Books, Author
 import json
 from flask import request, jsonify
 
@@ -26,6 +28,7 @@ def add_book_service():
             return jsonify({"message": "Can not add book!"}), 400
     else:
         return jsonify({"message": "Request error"}), 400
+
 
 # Get book by ID
 def get_book_by_id_service(id):
@@ -79,3 +82,13 @@ def delete_book_by_id_service(id):
 
     else:
         return jsonify({"message": "Not found books!"}), 404
+
+
+# Get book by author name
+def get_book_by_author_service(author):
+    books = Books.query.join(Author).filter(
+        func.lower(Author.name) == author.lower()).all()
+    if books:
+        return books_schema.jsonify(books)
+    else:
+        return jsonify({"message": f"No books found by {author}!"}), 404

@@ -1,6 +1,6 @@
-from library.extension import db
-from library.libraryma import ma, BookSchema
-from library.models import Books
+from RestFul_API.library.extension import db
+from RestFul_API.library.libraryma import ma, BookSchema
+from RestFul_API.library.models import Books
 import json
 from flask import request, jsonify
 

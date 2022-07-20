@@ -1,6 +1,6 @@
-from library.extension import db
-from library.libraryma import BookSchema
-from library.models import Author, Books, Borrows, Category, Students
+from RestFul_API.library.extension import db
+from RestFul_API.library.libraryma import BookSchema
+from RestFul_API.library.models import Author, Books, Borrows, Category, Students
 from flask import request, jsonify
 from sqlalchemy.sql import func
 import json

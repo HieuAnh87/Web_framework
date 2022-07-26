@@ -1,4 +1,4 @@
-# RestFul API with Flask
+# RESTful API with Flask
 Build simple CRUD library api 
 
 ## Docs:
